@@ -1,13 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 
 namespace Cogworks.Configuration
 {
     public static class AppSettings
     {
-        public static T Get<T>(string key)
+        public static T Get<T>(string key, Action<Exception> errorCallback = null)
         {
             var value = default(T);
+
             var setting = ConfigurationManager.AppSettings[key];
 
             if (string.IsNullOrWhiteSpace(setting))
@@ -16,7 +18,15 @@ namespace Cogworks.Configuration
             }
 
             var converter = TypeDescriptor.GetConverter(typeof(T));
-            value = (T)converter.ConvertFromInvariantString(setting);
+
+            try
+            {
+                value = (T)converter.ConvertFromInvariantString(setting);
+            }
+            catch (Exception ex)
+            {
+                errorCallback?.Invoke(ex);
+            }
 
             return value;
         }
