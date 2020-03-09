@@ -21,7 +21,7 @@ namespace Cogworks.Configuration
 
             try
             {
-                value = (T)converter.ConvertFromInvariantString(setting);
+                value = (T) converter.ConvertFromInvariantString(setting);
             }
             catch (Exception ex)
             {
