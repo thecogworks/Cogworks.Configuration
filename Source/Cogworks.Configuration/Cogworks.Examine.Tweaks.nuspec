@@ -1,0 +1,25 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cogworks.Configuration</id>
+    <version>$version$</version>
+    <title>Cogworks.Configuration</title>
+    <authors>Cogworks</authors>
+    <owners>Cogworks</owners>
+    <projectUrl>https://github.com/thecogworks/Cogworks.Configuration</projectUrl>
+    <repository type="git" url="https://github.com/thecogworks/Cogworks.Configuration" />
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Set of the app setting helpers.</description>
+    <copyright>The Cogworks Limited 2021</copyright>
+    <tags>Cogworks, Configuration, appsettings, dotnet, net, csharp, backend</tags>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="System.Configuration.ConfigurationManager" version="4.7.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\**\Cogworks.Configuration.dll" target="lib" />
+  </files>
+</package>
