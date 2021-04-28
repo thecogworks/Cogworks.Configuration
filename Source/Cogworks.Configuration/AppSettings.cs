@@ -1,30 +1,31 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Configuration;
-using Umbraco.Core;
 
 namespace Cogworks.Configuration
 {
     public static class AppSettings
     {
-        public static T Get<T>(string key, bool tryConvertTo = false)
+        public static T Get<T>(string key, Action<Exception> errorCallback = null)
         {
             var value = default(T);
+
             var setting = ConfigurationManager.AppSettings[key];
 
-            if (string.IsNullOrWhiteSpace(setting)) return value;
-
-            if (tryConvertTo)
+            if (string.IsNullOrWhiteSpace(setting))
             {
-                var attemptConvert = setting.TryConvertTo<T>();
-                if (attemptConvert.Success)
-                {
-                    value = attemptConvert.Result;
-                }
+                return value;
             }
-            else
+
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+
+            try
             {
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                value = (T)converter.ConvertFromInvariantString(setting);
+                value = (T) converter.ConvertFromInvariantString(setting);
+            }
+            catch (Exception ex)
+            {
+                errorCallback?.Invoke(ex);
             }
 
             return value;
